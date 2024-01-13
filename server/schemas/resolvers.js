@@ -1,6 +1,10 @@
 const resolvers = {
   Query: {
     
+  },
+
+  Mutation: {
+    
   }
 };
 
