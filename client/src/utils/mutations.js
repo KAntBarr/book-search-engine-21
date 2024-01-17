@@ -37,11 +37,11 @@ export const ADD_USER = gql`
 // `;
 
 export const SAVE_BOOK = gql`
-  mutation Mutation($newDescription: String!, $newBookId: String!, $newTitle: String!) {
-    saveBook(newDescription: $newDescription, newBookId: $newBookId, newTitle: $newTitle) {
-      _id
-      username
-      email
+mutation SaveBook($newDescription: String!, $newBookId: String!, $newTitle: String!, $newAuthors: [String], $newImage: String, $newLink: String) {
+  saveBook(newDescription: $newDescription, newBookId: $newBookId, newTitle: $newTitle, newAuthors: $newAuthors, newImage: $newImage, newLink: $newLink) {
+    _id
+    username
+    email
   }
 }
 `;

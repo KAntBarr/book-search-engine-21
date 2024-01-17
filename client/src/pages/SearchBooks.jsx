@@ -87,6 +87,8 @@ const SearchBooks = () => {
       //   throw new Error('something went wrong!');
       // }
 
+      console.log(bookToSave);
+
       const { bookId, authors, title, description, image } = bookToSave;
 
       // confirm these variables are correct *****************!!!
