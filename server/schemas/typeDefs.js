@@ -17,6 +17,15 @@ const typeDefs = `
     title: String
   }
 
+  input SaveBookInput {
+    newAuthors: [String], 
+    newDescription: String!, 
+    newBookId: String!, 
+    newImage: String, 
+    newLink: String, 
+    newTitle: String!
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -24,20 +33,14 @@ const typeDefs = `
 
   # Define which queries the front end is allowed to make and what data is returned
   type Query {
-    me(userId: ID!): User
+    me: User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    saveBook(
-      newAuthors: [String], 
-      newDescription: String!, 
-      newBookId: String!, 
-      newImage: String, 
-      newLink: String, 
-      newTitle: String!): Book
-    removeBook(bookId: ID!): Book
+    saveBook(input: SaveBookInput!): User
+    removeBook(bookId: ID!): User
   }
 `;
 

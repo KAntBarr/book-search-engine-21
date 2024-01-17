@@ -12,6 +12,7 @@ import {
 import { useQuery, useMutation } from '@apollo/client';
 
 import { GET_ME } from '../utils/queries';
+import { REMOVE_BOOK } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
@@ -49,8 +50,13 @@ const SavedBooks = () => {
   // }, [userDataLength]);
 
   // find the correct parameters to pass **********************!!!!!
-  const { loading, userData } = useQuery(GET_ME, {
-    variables: {  },
+  const { loading, data: userData } = useQuery(GET_ME);
+
+  const [deleteBook, { error }] = useMutation(REMOVE_BOOK, {
+    refetchQueries: [
+      GET_ME,
+      'getMe'
+    ]
   });
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
@@ -71,6 +77,9 @@ const SavedBooks = () => {
       // const updatedUser = await response.json();
       // setUserData(updatedUser);
 
+      const { data } = await deleteBook({
+        variables: { bookId },
+      });
 
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
@@ -78,6 +87,12 @@ const SavedBooks = () => {
       console.error(err);
     }
   };
+
+
+  const testUser = (user) => {
+    console.log(user, ';)');
+    // return <h1>Test!</h1>;
+  }
 
   // if data isn't here yet, say so
   // if (!userDataLength) {
@@ -93,16 +108,17 @@ const SavedBooks = () => {
       <div className="text-light bg-dark p-5">
         <Container>
           <h1>Viewing saved books!</h1>
+          {Auth.loggedIn() && testUser(userData)}
         </Container>
       </div>
       <Container>
         <h2 className='pt-5'>
-          {userData.savedBooks.length
-            ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
+          {userData.me.savedBooks.length
+            ? `Viewing ${userData.me.savedBooks.length} saved ${userData.me.savedBooks.length === 1 ? 'book' : 'books'}:`
             : 'You have no saved books!'}
         </h2>
         <Row>
-          {userData.savedBooks.map((book) => {
+          {userData.me.savedBooks.map((book) => {
             return (
               <Col key={book.bookId} md="4">
                 <Card border='dark'>

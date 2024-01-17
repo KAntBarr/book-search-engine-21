@@ -4,8 +4,12 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
+      // console.log('test1111111');
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
+        const user = await User.findOne({ _id: context.user._id }).populate('savedBooks');
+        // const user = await User.findById({ _id: context.user._id });
+        console.log('$$$$;)$$$$', user, '&&&&;)&&&&');
+        return user;
       }
       throw AuthenticationError;
     },
@@ -19,6 +23,7 @@ const resolvers = {
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
+      console.log(user, '****;)****');
       if (!user) {
         throw AuthenticationError;
       }
@@ -40,7 +45,7 @@ const resolvers = {
       newTitle
     }, context) => {
       if (context.user) {
-        const book = await Book.create({
+        await Book.create({
           authors: newAuthors,
           description: newDescription,
           bookId: newBookId,
@@ -49,27 +54,29 @@ const resolvers = {
           title: newTitle
         });
 
-        await User.findOneAndUpdate(
+        const user = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { savedBooks: book.bookId } }
+          { $addToSet: { savedBooks: book } },
+          { new: true }
         );
 
-        return book;
+        return user;
       }
       throw AuthenticationError('You need to be logged in!');
     },
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
-        const book = await Book.findOneAndDelete({
+        await Book.findOneAndDelete({
           bookId
         });
 
-        await User.findOneAndUpdate(
+        const user = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedBooks: book.bookId } }
+          { $pull: { savedBooks: { bookId } } },
+          { new: true }
         );
 
-        return book;
+        return user;
       }
       throw AuthenticationError;
     },

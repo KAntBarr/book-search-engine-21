@@ -6,6 +6,9 @@ class AuthService {
   // get user data
   getProfile() {
     return decode(this.getToken());
+    // const token = decode(this.getToken());
+    // console.log(token);
+    // return token;
   }
 
   // check if user's logged in
