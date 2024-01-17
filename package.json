@@ -9,7 +9,8 @@
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build",
     "render-build": "npm install && npm run build",
-    "startmon": "nodemon server/server.js"
+    "startmon": "nodemon server/server.js",
+    "clear-db": "node server/seeds/seed.js"
   },
   "keywords": [],
   "author": "",
