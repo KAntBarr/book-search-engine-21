@@ -4,12 +4,11 @@ const typeDefs = `
     _id: ID
     username: String
     email: String
-    password: String
-    thoughts: [Book]!
+    bookCount: Int
+    savedBooks: [Book]!
   }
 
   type Book {
-    _id: ID
     authors: [String]
     description: String
     bookId: String
@@ -25,13 +24,13 @@ const typeDefs = `
 
   # Define which queries the front end is allowed to make and what data is returned
   type Query {
-    getSingleUser(userId: ID!): User
+    me(userId: ID!): User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addBook(
+    saveBook(
       newAuthors: [String], 
       newDescription: String!, 
       newBookId: String!, 
