@@ -18,7 +18,6 @@ const typeDefs = `
   }
 
   input SaveBookInput {
-    newAuthors: [String], 
     newDescription: String!, 
     newBookId: String!, 
     newImage: String, 
@@ -40,13 +39,16 @@ const typeDefs = `
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     saveBook(newAuthors: [String], 
-      newDescription: String!, 
-      newBookId: String!, 
-      newImage: String, 
-      newLink: String, 
-      newTitle: String!): User
+      input: SaveBookInput!): User
     removeBook(bookId: ID!): User
   }
 `;
+
+// saveBook(newAuthors: [String], 
+//   newDescription: String!, 
+//   newBookId: String!, 
+//   newImage: String, 
+//   newLink: String, 
+//   newTitle: String!): User
 
 module.exports = typeDefs;

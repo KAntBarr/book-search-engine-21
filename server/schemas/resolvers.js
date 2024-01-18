@@ -38,13 +38,14 @@ const resolvers = {
     },
     saveBook: async (parent, {
       newAuthors,
-      newDescription,
-      newBookId,
-      newImage,
-      newLink,
-      newTitle
+      input: {
+        newDescription,
+        newBookId,
+        newImage,
+        newLink,
+        newTitle
+      }
     }, context) => {
-      console.log('test1');
       if (context.user) {
         const book = {
           authors: newAuthors,
@@ -53,14 +54,12 @@ const resolvers = {
           image: newImage,
           link: newLink,
           title: newTitle
-        }
-        console.log('test2');
+        };
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { savedBooks: book } },
           { new: true, runValidators: true }
         );
-        console.log('test3');
         return user;
       }
       throw AuthenticationError('You need to be logged in!');

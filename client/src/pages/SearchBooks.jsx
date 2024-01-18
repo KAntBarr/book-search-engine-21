@@ -87,18 +87,20 @@ const SearchBooks = () => {
       //   throw new Error('something went wrong!');
       // }
 
-      console.log(bookToSave);
+      // console.log(bookToSave);
 
       const { bookId, authors, title, description, image } = bookToSave;
-
+      console.log('test input');
       // confirm these variables are correct *****************!!!
       const { data } = await saveBook({
         variables: {
           newAuthors: authors,
-          newDescription: description,
-          newBookId: bookId,
-          newImage: image,
-          newTitle: title,
+          input: {
+            newDescription: description,
+            newBookId: bookId,
+            newImage: image,
+            newTitle: title,
+          }
         },
       });
 
