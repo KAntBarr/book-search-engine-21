@@ -4,6 +4,8 @@
 ## Description
 This application is for saving books that were displayed from a search using an API from Google. The purpose of this repository is to demonstrate that I can convert an application from using RESTful APIs to GraphQL APIs.
 
+<img width="1128" alt="image" src="https://github.com/KAntBarr/book-search-engine-21/assets/70618192/54a5a0e7-5a3f-4313-8b42-64ca54c3624c">
+
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
